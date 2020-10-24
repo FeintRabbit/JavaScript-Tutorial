@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      Object Basics <br />
+
+      Key:Value pairs <br />
+
+      Object literal; let x = {} <br />
+      dot notation; person.name // andrew <br />
+    </div>
+    <script>
+      const married = false;
+
+      const person = {
+        name: "andrew",
+        age: 29,
+        // assign value to variable (above)
+        married: married,
+        siblings: ["emily", "laura"],
+        // declare function (method)
+        greet: function (name) {
+          console.log(`Hello, my name is ${name}`);
+        },
+        // shorthand method set-up
+        sayHello(name) {
+          console.log(`Hello, my name is ${name}`);
+        },
+        // nesting objects
+        job: {
+          title: "developer",
+          company: {
+            name: "company name",
+            address: "123 fake st",
+          },
+        },
+        // declare key with hyphen (see bracket below)
+        "random-value": "random",
+      };
+      // access object & values
+      console.log(person);
+      console.log(person.name);
+      console.log(person.job.company.name); // company name
+      // accessing values that don't exist
+      console.log(person.work); // undefined
+      // console.log(person.work.company.name); // type error (cannot read X of undefined)
+      // assign to vars
+      const age = person.age;
+      console.log(age); // 29
+      // change values
+      person.age = 30;
+      console.log(person.age); // 30
+      // add a value
+      person.city = "melbourne";
+      // delete property
+      delete person.siblings;
+      // invoke method
+      person.sayHello("Andrew");
+
+      // bracket notation
+      console.log(person["random-value"]); // allows for string key names
+      let random = "random-value";
+      console.log(person[random]); // allows for passing variable for access (react with forms)
+    </script>
+
+    <div>
+      <!-- ------------ -->
+      <!-- This keyword -->
+      <!-- ------------ -->
+      <h1>This keyword</h1>
+      Points to the left of the dot (only works when left of the dot is the object) <br />
+
+      In regular function (not arrow),'this' is determined by "HOW" a function is invoked. - if method invoked with
+      nothing left of . dot, defaults to global (window object) <br />
+
+      <button class="btn1">click</button>
+      <button class="btn2">click</button>
+    </div>
+    <script>
+      const john = {
+        firstName: "john",
+        lastName: "anderson",
+        fullName: function () {
+          console.log(this);
+          console.log(`Fullname is ${this.firstName} ${this.lastName}`);
+        },
+      };
+      john.fullName(); // Fullname is john anderson
+      // john.firstName.fullName(); // errors
+
+      // This keyword 'gotchas'
+      function showThis() {
+        console.log(this);
+      }
+      showThis(); // logs the window object
+
+      const andrew = {
+        firstName: "andrew",
+        showThis: showThis,
+      };
+      andrew.showThis(); // logs andrew object
+
+      const bob = {
+        firstName: "bob",
+        showThis: showThis,
+      };
+      bob.showThis(); // logs bob object
+
+      // ********* Callback functions **************
+
+      // button 1 invokes, 'this' is the button object being clicked
+      document.querySelector(".btn1").addEventListener("click", showThis);
+      // button 2 invokes, showthis is invoked as a method inside an anon function, and therefore has no reference to the btn. 'this' in this case is global window 'this'
+      document.querySelector(".btn2").addEventListener("click", function () {
+        showThis();
+      });
+    </script>
+    <div>
+      <!-- ----------- -->
+      <!-- Blue prints -->
+      <!-- ----------- -->
+      <h1>Blue print</h1>
+      Factory functions <br />
+      Construnctor functions <br />
+      - constructor property <br />
+      - prototype property (prototypal inheritance model)
+    </div>
+    <script>
+      // factory functions
+      // input the variables as arguments at time of creation
+      console.log(">>> Factory function <<<");
+      function createPerson(firstName, lastName) {
+        return {
+          firstName: firstName,
+          lastName: lastName,
+          fullName: function () {
+            console.log(`My name is ${this.firstName} ${this.lastName}, and I was created with a factory function.`);
+          },
+        };
+      }
+      // create object from factory function
+      const jim = createPerson("jimbo", "jones");
+      jim.fullName();
+      const stan = createPerson("stan", "darsh");
+      stan.fullName();
+
+      // constructor functions
+      console.log(">>> Constructor function <<<");
+      function Person(firstName, lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.fullName = function () {
+          console.log(`My name is ${this.firstName} ${this.lastName}, and I was created with a constructor function.`);
+        };
+      }
+      // create object using constructor function
+      // NEW - creates new object, points to it, omit return
+      const kyle = new Person("kyle", "broflovski");
+      kyle.fullName();
+
+      // constructor property
+      console.log(kyle);
+      console.log(kyle.constructor); // gives access to the constructor that created this function
+
+      // create objs from existing objs (not constructor source)
+      const eric = new kyle.constructor("eric", "cartman");
+      eric.fullName();
+
+      // other things are also objects, and have constructors. eg:
+      const testObj = {};
+      const testFunc = function () {};
+      console.log(testObj.constructor); // ƒ Object() { [native code] }
+      console.log(testFunc.constructor); // ƒ Function() { [native code] }
+
+      // prototypal inheritance model
+      // prototype property, shared by all objects
+      // reduce creating for each object and reduces memory
+      console.log(">>> prototype <<<");
+      // regular constructor function
+      function AccountConstructor(name, initialBalance) {
+        this.name = name;
+        this.balance = initialBalance;
+        this.deposit = function (amount) {
+          this.balance += amount;
+          console.log(`Hello ${this.name}, your balance is ${this.balance}`);
+        };
+      }
+      // add additional prototypes to the constructor
+      // property proto
+      AccountConstructor.prototype.bank = "CHASE";
+      // method proto
+      AccountConstructor.prototype.withdraw = function (amount) {
+        this.balance -= amount;
+        console.log(`Hello ${this.name}, your balance is ${this.balance}`);
+      };
+
+      const randy = new AccountConstructor("randy", 0);
+      const sharon = new AccountConstructor("sharon", 500);
+
+      // access the property on the object prototype
+      console.log(randy);
+      console.log(randy.bank);
+
+      // access the method on the proto
+      sharon.withdraw(100);
+
+      // Property lookup
+      // first on the object (instance), then the constructor, then prototype (parent)
+    </script>
+    <div>
+      <!-- ------------ -->
+      <!-- class syntax -->
+      <!-- ------------ -->
+      <h1>ES6 class syntax</h1>
+      syntatic sugar for constructor function & prototypal inheritance
+    </div>
+    <script>
+      console.log(">>> CLASS <<<");
+      // set-up using class keyword
+      class Account {
+        // constructor method sets up per instance props/methods
+        constructor(name, initialBalance) {
+          this.name = name;
+          this.balance = initialBalance;
+          this.deposit = function (amount) {
+            this.balance += amount;
+            console.log(`Hello ${this.name}, your balance is ${this.balance}`);
+          };
+        }
+        // prototypes
+        bank = "CHASE";
+        withdraw(amount) {
+          this.balance -= amount;
+          console.log(`Hello ${this.name}, your balance is ${this.balance}`);
+        }
+      }
+      // create new obj of class
+      const sheila = new Account("sheila", 100);
+      console.log(sheila);
+      sheila.deposit(50);
+    </script>
+    <div>
+      <!-- ------------------ -->
+      <!-- Call, Apply & Bind -->
+      <!-- ------------------ -->
+      <h1>Call, Apply & Bind</h1>
+      <button class="increment">increment</button>
+    </div>
+    <script>
+      // ******* CALL *******
+      // call - runs instantly, arguments - list of items
+      console.log(">>> CALL <<<");
+
+      const gerald = {
+        name: "gerald",
+        age: "50",
+        greet: function () {
+          console.log(this);
+          console.log(`Hello ${this.name}, age: ${this.age}`);
+        },
+      };
+      const ike = {
+        name: "ike",
+        age: "3",
+      };
+      // I can greet gerald, but not ike
+      gerald.greet();
+      // ike.greet(); // not a function
+
+      // applying a function using this, not on the object
+      function greetGlobal() {
+        console.log(this);
+        console.log(`Hello ${this.name}, age: ${this.age}`);
+      }
+
+      // these will fail:
+      greetGlobal(); // returns the window
+      // ike.greet();  // not a function
+
+      // call method, declates 'this' for that method
+      greetGlobal.call(ike);
+      greetGlobal.call({ name: "shelly", age: "15" });
+      // you can also call another object method, and call in a different obj
+      gerald.greet.call(ike);
+
+      // ******* APPLY *******
+      // apply - runs instantly, arguments - array of items
+      console.log(">>> APPLY <<<");
+
+      // func w arguments
+      function greetArgs(city, country) {
+        console.log(this);
+        console.log(`Hello ${this.name}, age: ${this.age} from ${city}, ${country}`);
+      }
+      // call uses a list of args
+      greetArgs.call(gerald, "south park", "US");
+      // apply uses an array of args
+      greetArgs.apply(ike, ["south park", "US"]);
+
+      // ******* BIND *******
+      // bind - assign & use later, arguments - list of items.
+      console.log(">>> BIND <<<");
+
+      // assign first
+      // const ikeGreet = greetGlobal.bind(ike);
+      const ikeGreet = greetArgs.bind(ike, "south park", "US");
+      // invoke later
+      ikeGreet();
+
+      // ******* Button example *******
+      console.log(">>> Button example <<<");
+      const counter = {
+        count: 0,
+        increment() {
+          console.log(this);
+          this.count++;
+          console.log(this.count);
+        },
+      };
+      const btn = document.querySelector(".increment");
+      // inside the event method, 'this' context would be the DOM button being clicked
+      // for dom interaction, you need a way to tell the method which 'this' you're refering to.
+
+      // fail
+      // btn.addEventListener("click", counter.increment); // 'this' points to btn, not counter
+
+      // Bind to object in callback - some edge cases (cannot be removed)
+      // btn.addEventListener("click", counter.increment.bind(counter));
+      // btn.removeEventListener("click", counter.increment.bind(counter));
+
+      // ***** Remember this method *****
+      // Bind to object in variable (keeps reference to function for removal)
+      const increment = counter.increment.bind(counter);
+      btn.addEventListener("click", increment);
+      btn.removeEventListener("click", increment);
+
+      // invoking in an anon function - (not sure of edge cases, cannot be removed)
+      // btn.addEventListener("click", function () {
+      //   counter.increment();
+      // });
+
+      // https://stackoverflow.com/questions/21298918/is-it-possible-to-call-a-class-method-with-addeventlistener
+      // https://stackoverflow.com/questions/55997653/how-do-you-call-a-object-method-from-within-an-addeventlistener-call
+      // https://stackoverflow.com/questions/37911689/javascript-bind-vs-anonymous-function
+      // https://www.freecodecamp.org/news/this-is-why-we-need-to-bind-event-handlers-in-class-components-in-react-f7ea1a6f93eb/
+    </script>
+  </body>
+</html>

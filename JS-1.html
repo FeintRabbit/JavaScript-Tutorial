@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>JavaScript basics</h1>
+    <div>
+      <h2>arrays, functions & objects again</h2>
+      <div id="dimentions"></div>
+      <p>Arrays - easy way to store and acces data</p>
+      <script>
+        const friend1 = "anna";
+        const friend2 = "anna";
+        const friend3 = "anna";
+        const friend4 = "anna";
+
+        const friends = ["anna", "greg", "dave", "not dave", 45, null];
+        console.log(friends); // logs whole array
+        console.log(friends[0]); // logs anna
+        console.log(friends[4]); // logs 45
+
+        let bestfriend = friends[3]; // set a val = an item in array
+        console.log(bestfriend);
+
+        friends[4] = "yes dave";
+        console.log(friends[4]);
+      </script>
+
+      <p>functions</p>
+      <script>
+        // functions - declare & invoke
+
+        //declare
+        function hiConole() {
+          console.log("hello!");
+          console.log("I'm");
+          console.log("console!");
+        }
+        //invoke
+        hiConole();
+
+        // Parameters, Arguments
+
+        const bob = "Bob";
+        function hello(name) {
+          // when declared, name is a paramater/placeholder. It's a local variable, only used in the function.
+          console.log("hello " + name);
+        }
+        hello("Anna"); // when used, name input is an argument
+        hello(bob); // can also pass in a variable
+
+        // return
+
+        const wallHeight = 80;
+
+        function calculate(valueInch) {
+          console.log("The value in cm is: " + valueInch * 2.54 + "cm");
+          return "The value in cm is: " + valueInch * 2.54 + "cm";
+        }
+
+        const width = calculate(100);
+        const height = calculate(wallHeight);
+        const dimentions = [width, height];
+        console.log(dimentions);
+        document.getElementById("dimentions").innerHTML = dimentions;
+
+        // function - expressions
+
+        // regular way:
+        function addValues(num1, num2) {
+          return num1 + num2;
+        }
+        const firstValue = addValues(5, 5);
+        console.log(firstValue);
+
+        // expression - anonymous function (doesn't have a function name, stores a function in variable)
+        const secondValue = function (num3, num4) {
+          return num3 + num4;
+        };
+        console.log(secondValue(5, 6));
+
+        // expression - arrow function (same as expression, but does require code block)
+        const thirdValue = (num5, num6) => num5 + num6;
+        console.log(thirdValue(4, 5));
+        // function without naming it, without a code block {}
+
+        //function RETURN
+
+        // return returns back a value, but also stops running a function. Usefuly for equations using paramaters.
+        function random(number) {
+          return Math.floor(Math.random() * number);
+        }
+
+        // function to input/output HTML
+        // using a function to write to a value to html, you cannot 'return'. the value should be 'written'.
+        input.onchange = function () {
+          const htmlInput = document.querySelector("#numberInput").value; // declare input number from HTML element
+          const htmlOutput = document.querySelector("p"); // declare output a HTML element for result
+          const functionOutput = htmlInput + 1; // do function (new output)
+          htmlOutput.textContent = functionOutput; // write function output to html output
+        };
+        // https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Return_values
+      </script>
+
+      <p>Objects & <i>methods</i></p>
+      object methods
+      <script>
+        // objects store key:value pairs
+        // if a function is stores in an object, it is called a method
+
+        const person2 = {
+          name: "Andrew", //string
+          lastName: "Casta",
+          age: 29, // number
+          education: true, //boolean
+          married: false,
+          siblings: ["Laura", "Emily"], // array
+          greeting: function () {
+            // method (function in a object is a METHOD)
+            console.log("Hello my name is Andrew");
+          },
+          greeting2() {
+            console.log("Hello my name is Andrew");
+          },
+        };
+        console.log(person2.name); // access string
+
+        console.log(person2.siblings[0]); // access array value
+
+        person2.greeting(); // call a METHOD (with no parameters)
+        person2.greeting2();
+
+        const age2 = person2.age; // assign variable from object
+        console.log(age2);
+
+        person2.name = "Not Andrew"; // change calue on object
+        console.log(person2.name);
+      </script>
+
+      <h2>Conditional statements</h2>
+      <script>
+        // if
+        if (true) {
+          console.log("it's true");
+        }
+        if (1 < 2) {
+          console.log("1 is bigger than two");
+        }
+        const TF = 1 < 2;
+        if (TF) {
+          console.log("yep, true");
+        }
+        //if & else
+        if (false) {
+          console.log("true"); // note, this doesn't run!
+        } else {
+          console.log("else, false");
+        }
+
+        // if, else & if else
+        const numn1 = 4;
+        const numn2 = 4;
+        if (numn1 > numn2) {
+          console.log("it's bigger");
+        } else if (numn1 == numn2) {
+          console.log("same");
+        } else {
+          console.log("it's not");
+        }
+
+        // switch
+
+        // dice should be 1-6
+        const dice = 1;
+
+        // using if....
+        // if(dice == 1){
+        //   console.log('one');
+        // }
+        // if(dice == 2){
+        //   console.log('two');
+        // }
+        // // one for each number
+        // // one for each number
+        // // one for each number
+        // if (dice < 1 || dice > 6) {
+        //   console.log('fail');
+        // }
+
+        // using else if
+        // if(dice == 1){
+        //   console.log('one');
+        // }
+        // else if(dice == 2){
+        //   console.log('two');
+        // }
+        // // one for each number
+        // // one for each number
+        // // one for each number
+        // else {
+        //   console.log('fail');
+        // }
+
+        switch (dice) {
+          case 1:
+            console.log("one");
+            break;
+          case 2:
+            console.log("two");
+            break;
+          case 3:
+            console.log("three");
+            break;
+          default:
+            console.log("fail");
+        }
+      </script>
+      <h2>Loops</h2>
+      <script>
+        // while
+        let amount = 10;
+        while (amount > 0) {
+          console.log("I have " + amount + " dollars and I'm going to the mall");
+          amount--;
+        }
+        // do while
+        let money = 0;
+        do {
+          //  does this first (no matter ther condition)
+          console.log("you have " + money + " dollars");
+          money++;
+        } while (money < 10); // checks condition, then runs again if true
+
+        //  for
+        let i;
+        for (i = 0; i < 10; i++) {
+          console.log("number is: " + i);
+        }
+
+        for (let x = 11; x >= 0; x--) {
+          console.log("number is:" + x);
+        }
+      </script>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>conneting the dots</h1>
+    <ul>
+      <li>String methods</li>
+      <li>Global/local scope</li>
+      <li>Callback function</li>
+      <li>Array Iterators - (map, filter, reduce)</li>
+      <li>Global v local Objects</li>
+      <li>Math & Date</li>
+      <li>etc...</li>
+    </ul>
+
+    <h2>string properties and methods</h2>
+    <p>
+      <a href="http:/www.w3schools.com/js/js_string_methods.asp" target="_blank" rel="noopener noreferrer">
+        W3 school - string methods
+      </a>
+    </p>
+    A method is a function within an object. It's <b>declared</b> on the <b>object</b>, then <b>invoked</b> using
+    <b>object.methodName()</b> <br />
+    JS created a wrapper string object when we create a string. <br />
+    String methods are build in functions you can use on a string.
+    <script>
+      let text = " Peter Jordan";
+
+      // default properties
+      let result = text.length;
+      console.log(result);
+
+      // default methods
+      console.log(text.toLowerCase());
+      console.log(text.toUpperCase());
+      console.log(text.charAt(1)); // gets first char
+      console.log(text.charAt(text.length - 1)); // get last char
+      console.log(text.indexOf("P")); // index number of letter P
+      console.log(text.trim());
+      console.log(text.startsWith("peter")); // the case is wrong, and there is a space
+      console.log(text.trim().toLowerCase().startsWith("peter")); // trims the space and sets text to lower case before checking
+      console.log(text.includes("eter")); // does it contain this text?
+      console.log(text.slice(0, 2)); // gets the value from one value until the next
+      console.log(text.slice(-3)); // creates a substring
+    </script>
+
+    <h2>ES6 FYI - template literals</h2>
+    <p>You can use `<i>to start typing a concatinated string with ${expressions} inside.`</i></p>
+    <script>
+      const name = "john";
+      const age = 25;
+      const sentance = "Hey it's " + name + " and he is " + age + " years old.";
+      console.log(sentance);
+      //   use the back ticks then insert expressions using ${}
+      const sentanceBack = `Hey it's ${name} and he is ${age} years old. ${1 + 2}`;
+      console.log(sentanceBack);
+    </script>
+
+    <h2>Array properties and methods</h2>
+    <script>
+      let names = ["john", "bobo", "barry", "olga", "ben"];
+
+      //length
+      console.log(names.length); // length of array
+      console.log(names[4].length); // length of string data in array
+      console.log(names[names.length - 1].length); // length of the last array string
+
+      //concatination
+      const lastNames = ["pepper", "onion", "banana"];
+      const allNames = names.concat(lastNames);
+      console.log(allNames);
+      //reverse
+      console.log(allNames.reverse());
+
+      //shift - drop from front of array
+      //unshift - add to front of array
+      //pop - drops items off end
+      //push - add items to end
+      //slice - return items from array
+      //splice - takes item FROM array
+      const specificNames = allNames.splice(2, 1); //index 2, delete 1
+      const specificNames = allNames.splice(2, 1, "Bobby"); //index 2, delete 0, add Bobby
+      console.log(specificNames);
+    </script>
+
+    <h2>
+      Arrays and for loop
+      <a href="https://www.youtube.com/watch?v=2Ji-clqUYnA&t=17194s" target="_blank" rel="noopener noreferrer">
+        (full name exercise)</a
+      >
+    </h2>
+    <script>
+      const firstName = ["anna", "susy", "bob"];
+      const lastName = "shakeandbake";
+      let newArray = [];
+
+      // for loop with array
+
+      for (let i = 0; i < firstName.length; i++) {
+        const fullName = `${firstName[i]} ${lastName}`;
+        newArray.push(fullName);
+      }
+      console.log(newArray);
+    </script>
+    <h2>
+      Functions, return, if, arrays, for loop -
+      <a href="https://www.youtube.com/watch?v=2Ji-clqUYnA&t=17808s" target="_blank" rel="noopener noreferrer">
+        calculate total exercise
+      </a>
+    </h2>
+    <script>
+      const gas = [20, 40, 100, 30];
+      const food = [10, 40, 50];
+
+      function calculateTotal(arr) {
+        let total = 0;
+        for (let i = 0; i < arr.length; i++) {
+          total += arr[i];
+        }
+        if (total > 100) {
+          console.log("overspend");
+          return total;
+        }
+        console.log("all good");
+        return total;
+      }
+      const gasTotal = calculateTotal(gas);
+      const foodTotal = calculateTotal(food);
+      const otherTotal = calculateTotal([200, 4000, 500, 1]);
+
+      console.log({
+        gas: gasTotal,
+        food: foodTotal,
+        other: otherTotal,
+      });
+    </script>
+    <h2>Value vs reference</h2>
+    <script>
+      // this primative data type (string, number etc) only updates the value of the variable.
+      const num1 = 1;
+      let num2 = num1;
+      num2 = 7;
+      console.log(`the first value is ${num1}`);
+      console.log(`the secord value is ${num2}`);
+      // this object data type (array, function, object), will update all references
+      let person1 = { name: "bob" };
+      let person2 = person1;
+      person2.name = "greg";
+      console.log(`the name of the first person is ${person1.name}`);
+      console.log(`the name of the second person is ${person2.name}`);
+    </script>
+    <h2>Conditional (ternary) operator</h2>
+    <p>condition ? (runs if true) : (runs if false);</p>
+    <script>
+      const value = 1 < 0;
+
+      // using an if else statement
+      if (value) {
+        console.log("true");
+      } else {
+        console.log("false");
+      }
+
+      // this is a conditional ternary operator
+      value ? console.log("true") : console.log("false");
+    </script>
+
+    <h2>Global v Local scope & Variable lookup</h2>
+    <script>
+      // anything outside of a code block {} is a global
+
+      let myGlobal = "I'm global";
+      function run() {
+        let myLocal = "I'm local";
+        console.log(myGlobal + " within function");
+        console.log(myLocal + " within function");
+      }
+      run();
+      console.log(myGlobal); // this will work, as it's defined in the global scope
+      console.log(myLocal); // this will not, as it's only in the local scope of the above function.
+    </script>
+    <script>
+      // if statement, and other code blocks are same. Doesn't apply with VAR
+
+      // global variables can be looked up and used in a local function.
+      let global = 5;
+      let global2 = 5;
+
+      function add(a, b) {
+        result = a + b;
+        global = 10; // this value overrides the above global, and uses this.
+        return result;
+      }
+
+      console.log(add(5, 5) + global + global2);
+    </script>
+    <h2>Callback function, Higher Order Functions & Functions as First Class Objects/Citizens</h2>
+    Functions are first class objects - <br />
+    store functions in variable (expression/method), <br />
+    pass functions to another functions as argument <br />
+    return function from the function (closure) <br /><br />
+    Higher order function - accepts another function as an argument, or returns another funtion
+    <br /><br />
+    Callback funtion - function that is being pass into another function
+    <script>
+      //Higher order function
+      function greeting(name, callback) {
+        const myName = "Andrew";
+        const greeting = `${callback(name)}, my name is ${myName}`;
+        console.log(greeting);
+      }
+      // Callback function
+      function morning(name) {
+        return `Good morning ${name.toUpperCase()}`;
+      }
+      greeting("Steph", morning);
+    </script>
+    <script>
+      // this callback checks the time of day, then returns the appropriate greeting.
+      const time = "afternoon";
+
+      //Higher order function
+      function greeting(name, callback) {
+        const myName = "Andy";
+        const greeting = `${callback(name)}, my name is ${myName}`;
+        console.log(greeting);
+      }
+      // Callback function
+      function greetTime(name) {
+        if (time == "morning") {
+          return `Good morning ${name.toUpperCase()}`;
+        } else if (time == "afternoon") {
+          return `Good afternoon ${name.toUpperCase()}`;
+        } else {
+          ("not found");
+        }
+      }
+      greeting("Steph", greetTime);
+    </script>
+    <h2>Array methods</h2>
+    <p>
+      forEach, map, filter, find, reduce <br />
+      iterates over an array instead of using a loop <br />
+      accpets CALLBACK function as argument, calls CB against each item in array <br />
+      Key for React <br /><br />
+      I've also used some
+      <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions"
+        >arrow functions</a
+      >
+      for practice.
+    </p>
+    <div id="arrayOutput"></div>
+    <script>
+      // basic number array
+      const numbers = [0, 1, 2, 3, 4];
+
+      // standard array loop to show numbers
+      for (let i = 0; i < numbers.length; i++) {
+        console.log(numbers[i]);
+      }
+
+      // for each on numbers array
+      numbers.forEach(numbo);
+
+      function numbo(i) {
+        console.log(i);
+      }
+
+      // array of objects
+      const people = [
+        { name: "bob", age: 20, position: "developer", id: 1, salary: 200 },
+        { name: "peter", age: 25, position: "designer", id: 2, salary: 300 },
+        { name: "susy", age: 30, position: "the boss", id: 3, salary: 500 },
+        { name: "anna", age: 35, position: "the boss", id: 4, salary: 500 },
+      ];
+
+      // forEach
+      // does not return new array
+      //// for each item in array (currentValue), call it something in callback function - 'parameter, i, etc', loop through the array
+
+      // objectArray.forEach(function(paramater){//code})
+
+      // manual declare function
+      people.forEach(showPerson);
+      function showPerson(i) {
+        console.log(i.position);
+      }
+      // anonymous function
+      people.forEach(function (peeps) {
+        console.log(peeps.age);
+      });
+      // arrow function
+      people.forEach(peets => {
+        console.log(peets.name); // outputs each name
+      });
+
+      // map
+      // returns a new array, does not change array size
+      // allows for manipulation of the array values and set to new
+      // key for react
+
+      // const newArray = objectArray.Map(function(paramater){//code})
+
+      const ages = people.map(function (peeps) {
+        return peeps.age;
+      });
+      console.log(ages); // maps the value in a new array
+
+      const agesPlus = people.map(peeps => {
+        peeps.age + 10;
+      });
+      console.log(agesPlus); // manipulates the data then maps that new array
+
+      const ageObject = people.map(peeps => {
+        return {
+          firstName: peeps.name.toUpperCase(),
+          oldAge: peeps.age + 20,
+        };
+      });
+      console.log(ageObject);
+
+      const nameHeading = people.map(peeps => {
+        return `<h3>${peeps.name}</h3>`;
+      });
+      console.log(nameHeading);
+      document.querySelector("#arrayOutput").innerHTML = nameHeading.join("");
+
+      // filter
+      // returns new array, can change array size
+      // returns based on condition. i.e. one iteration per match
+
+      const youngPeople = people.filter(peeps => {
+        return peeps.age <= 25;
+      });
+      console.log(youngPeople); // finds all the people 25 and under, then iterates them
+
+      const developers = people.filter(peeps => {
+        return peeps.position === "developer";
+      });
+      console.log(developers); // returns all developers
+
+      const snrDevelopers = people.filter(peeps => {
+        return peeps.position === "senior developer";
+      });
+      console.log(snrDevelopers); // returns all senior developers (none), empty array
+
+      // find
+      // returns single instance from data (could be object, array etc) This example is an object.
+      // returns first match, if none (undefined)
+      // use for getting single unquie value
+
+      console.log(
+        (personId2 = people.find(peeps => {
+          return peeps.id === 2; // returns the whole object. Shorter, but it doesn't give acces to key value
+        }))
+      );
+
+      const personId = people.find(peeps => {
+        return peeps.id === 2;
+      });
+      console.log(personId.name); // finds and returns the key value (name), of object with id 2
+
+      // find v filter (with object)
+
+      const personIdFilter = people.filter(peeps => {
+        return peeps.id === 2;
+      });
+      console.log(personIdFilter[0].name); // filter returns an array (even with 1 value), so you need to navigate that array then item.
+
+      // reduce
+      // interates, with a callback function
+      // reduces to a single value
+      // 2 parameters:
+      // acc - total of all calculation
+      // curr - current interation/value
+
+      // const newArray = objectArray.reduce((total(acc),currentValue),initialValue)
+
+      const total = people.reduce(function (accTotal, currentItem) {
+        console.log(`total: ${accTotal}`);
+        console.log(`current salary: ${currentItem.salary}`);
+        accTotal += currentItem.salary; // starting at initialValue, add the current item to the acculating total
+        return accTotal;
+      }, 0);
+      console.log(total);
+    </script>
+
+    <h2>Math!</h2>
+    <p>Using methods, from a built in Math object</p>
+    <script>
+      const number = 4.56789;
+
+      const floorResult = Math.floor(number);
+      console.log(floorResult);
+
+      const ceilingResult = Math.ceil(number);
+      console.log(ceilingResult);
+
+      // sqrt - square root
+
+      // PI - pi value
+      const mathPI = Math.PI; // give Pi, 3.14.. etc
+      // min
+      const mathMin = Math.min(1, 2, 3, 4, 5); // gives 1
+      // max
+
+      // random
+      const mathRandom = Math.random(); //  gives a random number between 0 & 0.9999999999999 (never 1)
+      const mathRandomWholeNum = Math.round(Math.random() * 10); //  gives a random number between 0 & 0.9999999999999 (never 1)
+    </script>
+    <h2>Dates</h2>
+    <p>Another set of methods from a build in object</p>
+    <script>
+      // set the date object
+      const date = new Date();
+      console.log(date);
+
+      //month
+      const month = date.getMonth();
+      console.log(month); // give index, in August, this gives 7. I want 8.
+      console.log(month + 1); // this gives 8
+
+      // another way is to have a month array
+      var months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+
+      console.log(months[month]);
+
+      // day
+      const day = date.getDay();
+      console.log(day); // again gives the index value
+
+      var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      console.log(dayNames[day]);
+
+      // date
+      console.log(date.getDate());
+
+      // year
+      console.log(date.getFullYear());
+
+      const fullDateStr = `${dayNames[date.getDay()]}, ${date.getDate()} ${
+        months[date.getMonth()]
+      } ${date.getFullYear()}`;
+      console.log(fullDateStr);
+
+      // you can also set a specific date
+      const setDate = new Date("11 / 3 / 2020");
+
+      const fullSetDateStr = `${dayNames[setDate.getDay()]}, ${setDate.getDate()} ${
+        months[setDate.getMonth()]
+      } ${setDate.getFullYear()}`;
+      console.log(fullSetDateStr);
+
+      const setDateMan = new Date(2020, 10, 3, 13);
+      console.log(setDateMan);
+    </script>
+  </body>
+</html>

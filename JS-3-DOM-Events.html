@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="headingSpan">
+      <h1 id="title">DOM</h1>
+      <h2>Document Object Model</h2>
+      <h3>
+        Two Objectives: <br />
+        Select the element or groups <br />
+        Decide the effect to apply
+      </h3>
+    </div>
+    Browser running html becomes a document, and each element becomes an object (or node). <br />
+    Use inbuild methods to interact with html object/nodes
+    <ul id="listId" class="listClass">
+      <li id="listItem" class="special">Select Element</li>
+      <li id="listItem" class="special">Traverse Dom</li>
+      <li id="listItem" class="special">Insert/Remove element</li>
+      <li id="listItem" class="special">Apply styling</li>
+      <li id="lastListItem" class="special">add/remove CSS classes</li>
+    </ul>
+    <h4>Selecting DOM</h4>
+    <p>
+      Using JS on the DOM is similar to CSS <br />
+      Select what you want to affect <br />
+      Dedice the effect we want to apply <br />
+    </p>
+    <p>
+      You can interact straight with the DOM: <br />
+      document.body.style.colour = red <br />
+      <br />
+      or you can assign the DOM node/object (html element) to a variable then change that: <br />
+      const button = document.quesrySelector('#btn1') <br />
+      button.style.backgroundColour = blue <br />
+      button.style.colour = red <br />
+    </p>
+    <p>
+      The 'document' object is on the 'window' <br />
+      console.log(window) would show a breakdown and full structure
+    </p>
+    <p>
+      Once we select an element, it returns a node object, or node list, which is an arraylike
+      object
+    </p>
+    <button type="submit" id="btn">Sample Button</button>
+    <script>
+      const btn = document.getElementById("btn");
+      console.log(btn);
+      const name = btn.nodeName;
+      console.log(name);
+      const css = btn.style;
+      console.log(css);
+    </script>
+
+    <h4>Window and Document Overview</h4>
+    <p>
+      window object (browser API) - current tab we are in <br />
+      Document object - the document within the browser <br />
+      document is actually window.document... etc but window is not needed as it skips. <br />
+      console.dir(document) gives properties as well as methods
+    </p>
+    <h2>Selecting Elements</h2>
+    <h4>getElementById, getElementByTagName, getElementsByClassName</h4>
+    <h5 id="getElementHeading">heading 5 example</h5>
+    <h5 id="getElementHeading2">heading 5 example 2</h5>
+    <script>
+      //getElementById
+      const getHead = document.getElementById("getElementHeading");
+      getHead.style.color = "red";
+
+      // This doesn't work - as this is really a var assignment
+      //   const getHead2 = document.getElementById("getElementHeading").style.color;
+      //   getHead2 = "yellow";
+
+      document.getElementById("getElementHeading").style.color = "blue";
+
+      //getElementByTagName
+      // gets a NodeList - arraylike element for tags (HTML collection)
+      const nodeH5 = document.getElementsByTagName("h5");
+      nodeH5[1].style.color = "red"; // sets the second h5 to red
+
+      // spread operator - 'fills in the gaps'
+      const arrayNodeh5 = [...nodeH5]; // sets the NodeList to a real array
+
+      console.log(nodeH5);
+      console.log(arrayNodeh5);
+
+      //getElementsByClassName
+      const listItems = document.getElementsByClassName("listItem");
+      console.log(listItem);
+    </script>
+    <h4>quesrySelector, quesrySelectorAll</h4>
+    <p>
+      quesrySelector('any CSS') - selects first element <br />
+      quesrySelectorAll('any CSS') - selects all element <br />
+      allows use of array method straight away
+    </p>
+    <script>
+      //querySelector
+      const courseList = document.querySelector("#listId");
+      courseList.style.backgroundColor = "blue";
+
+      const courseListClass = document.querySelector(".special"); // only gets the first
+      console.log(courseListClass);
+
+      //querySelectorAll
+      const listItem = document.querySelectorAll("#listItem");
+      console.log(listItem);
+
+      // straight away use an array method
+      listItem.forEach(function (item) {
+        item.style.color = "red";
+      });
+
+      // arrow function bby
+      listItem.forEach((item) => {
+        item.style.color = "blue";
+      });
+
+      // all at once now!
+      document.querySelectorAll("#listItem").forEach((item) => {
+        item.style.color = "green";
+      });
+    </script>
+
+    <h4>Navigate the DOM tree (traverse DOM tree)</h4>
+    <p>childNode <br /></p>
+    <script>
+      // childNode - returns all childNodes, includes whitespace and rows for text
+      const listId = document.querySelector("#listId");
+      const allChildren = listId.childNodes;
+      console.log(allChildren);
+
+      // children - reutns just the children elements
+      const children = listId.children;
+      console.log(children);
+
+      // firstChild, lastChild - gives the first and last 'white space', not value
+      console.log(listId.firstChild);
+      console.log(listId.lastChild);
+    </script>
+    <p>ParentElement</p>
+    <script>
+      const titleDiv = document.querySelector("#title");
+      console.log(titleDiv); // title
+      console.log(titleDiv.parentElement); // navigated up to div
+      console.log(titleDiv.parentElement.parentElement); // navigated up to body
+      console.log(titleDiv.parentElement.parentElement.parentElement); // navigated up to html
+    </script>
+
+    <h4>previousSibling, nextSibling</h4>
+    <script>
+      // next sibling (nextElementSibling)
+      const listIdNext = document.querySelector("#listItem");
+      console.log(listIdNext);
+      const listNextSibling = listIdNext.nextSibling.nextSibling;
+      console.log(listNextSibling);
+      listNextSibling.style.color = "red";
+
+      // previous sibling (previousElementSibling)
+      const listIdLast = document.querySelector("#lastListItem");
+      const secondLastListItem = (listIdLast.previousElementSibling.style.color = "red");
+    </script>
+    <h4 id="headingTC">textContent & NodeValue <span></span></h4>
+    <script>
+      // manually getting node values
+      const headingTCNode = document.querySelector("#headingTC");
+      const textValue = headingTCNode.nodeValue;
+      console.log(textValue); // returns null
+      console.log(headingTCNode.childNodes); // returns nodes: text & the span within h4
+      console.log(headingTCNode.firstChild.nodeValue); // returns h4 text
+      console.log(headingTCNode.childNodes[0].nodeValue); // returns h4 text (because array 0 was requested)
+
+      // textContent
+      const easyText = headingTC.textContent;
+      console.log(easyText);
+    </script>
+
+    <h4 id="gasa" class="heading4"><a href="" id="vidlink"> getAttribute(), setAttribute()</a></h4>
+    <script>
+      // get the attributes of an element
+      const gasa = document.querySelector("#gasa");
+      const gasaClass = gasa.getAttribute("class");
+      console.log(gasaClass);
+
+      // set attributes of an element
+      const link = document.querySelector("#vidlink");
+      link.setAttribute("href", "https://youtu.be/2Ji-clqUYnA?t=29464");
+      link.textContent = `${link.textContent} now I have a link!`;
+
+      // console.log(link);
+    </script>
+    <div>
+      <style>
+        .color {
+          background: red;
+          color: white;
+        }
+        .text {
+          font-size: 10px;
+          letter-spacing: 5px;
+        }
+      </style>
+      <h4>classList & className</h4>
+      <span id="first" class="color">i'm the first element</span><br />
+      <span id="second">i'm the second element</span><br />
+      <span id="third">i'm the third element</span><br />
+      <script>
+        const first = document.querySelector("#first");
+        const second = document.querySelector("#second");
+        const third = document.querySelector("#third");
+
+        const classValue = first.className;
+        console.log(classValue); // logs 'color'
+
+        //set the class of an element (will override)
+        second.className = "text color";
+
+        // classList
+        third.classList.add("color"); // adds a class dynamically
+        // more code, blah blah
+        third.classList.remove("color"); // removes specific class
+        third.classList.add("text", "color"); // add multiple classes
+      </script>
+    </div>
+
+    <h2>Creating elements</h2>
+    <p>
+      useful for returning data from an object array <br />
+      createElement('element') createTextNode('text content') element.appendChild(childElement)
+    </p>
+    <a href="https://stackoverflow.com/questions/31643204/textnode-or-textcontent">
+      createTextNode vs textContent</a
+    >
+    <br /><br />
+    <div id="output">
+      <span>child of output div</span> <br />
+      <ul id="addList">
+        <li id="Li1">List item 1 (static HTML)</li>
+        <li id="LiReplace">TO BE REPLACED</li>
+      </ul>
+      <span id="removeSpan"
+        >SPAN TO BE REMOVED
+        <span id="removeSpanChild">removeSpanChild</span>
+      </span>
+      <script>
+        const output = document.querySelector("#output");
+
+        // create empty h5 element
+        const outputH5 = document.createElement("h5");
+
+        // create text node
+        const text = document.createTextNode("dynamically created h5 tag");
+
+        // add element (text) to new html element - this hasn't been created yet, just stored
+        outputH5.appendChild(text);
+
+        // output the variable (two elements above) to a place in the DOM
+        output.appendChild(outputH5);
+        console.log(output);
+
+        // adding to a list
+
+        const addList = document.querySelector("#addList");
+
+        const newLi = document.createElement("li");
+        const newText = document.createTextNode("List Item 2 (dynamic JS w createTextNode)");
+        newLi.appendChild(newText);
+        addList.appendChild(newLi);
+
+        // adding to list, use textContent
+        const newLi2 = document.createElement("li");
+        newLi2.textContent = "List item 3 (dynamic JS w textContent)";
+        newLi2.setAttribute("id", "newLi2");
+        addList.appendChild(newLi2);
+
+        // insertBefore (element, where)
+        const newLi3 = document.createElement("li");
+        newLi3.textContent = "List item A (dynamic JS w insertBefore)";
+        addList.insertBefore(newLi3, addList.firstElementChild); // place Li3 in the list before the firstElementChild
+
+        // replaceChild ('new', 'old')
+        const newLi4 = document.createElement("li");
+        newLi4.innerText = "List item 1.5 (dynamic JS w innerText & replaceChild)";
+        const replaceLi = document.querySelector("#LiReplace");
+        addList.replaceChild(newLi4, replaceLi);
+
+        // removeChild
+        const removeSpanChild = document.querySelector("#removeSpanChild");
+        document.querySelector("#removeSpan").removeChild(removeSpanChild);
+
+        // remove
+        document.querySelector("#removeSpan").remove();
+      </script>
+
+      <h2>textContent & innerHtmk</h2>
+      <div id="textContentOutput"></div>
+      <div id="innerHtmlOutput"></div>
+
+      <script>
+        // outputs all (including html)
+        const textContentOutput = document.querySelector("#textContentOutput");
+        textContentOutput.textContent = `<li>This is text, inside a li tag</li>`;
+
+        // outputs
+        const innerHtmlOutput = document.querySelector("#innerHtmlOutput");
+        innerHtmlOutput.innerHTML = `<li>This is text, inside a li tag</li>`;
+      </script>
+    </div>
+    <h1>Events</h1>
+    <p>events provide a way for the website to 'respond'</p>
+    <p>
+      Select element <br />
+      addEventListener() <br />
+      what event, what to do
+    </p>
+    <style>
+      .red {
+        background: red;
+        color: white;
+        text-transform: uppercase;
+        font-size: 2rem;
+      }
+      .blue {
+        background: blue;
+        color: white;
+        text-transform: capitalize;
+        font-size: 10px;
+      }
+      .btn {
+        background: #f15025;
+        color: white;
+        font-size: 1.2rem;
+        border: none;
+      }
+    </style>
+    <div id="eventsDiv">
+      <h2>events in javascript</h2>
+      <p>hey, I can trigger an event</p>
+      <button id="btn">click me</button> <br />
+      <input type="text" id="textInput" />
+    </div>
+    <script>
+      // event listener
+      // node.addEventListener(event,function)
+
+      const heading = document.querySelector("h2");
+      const text = document.querySelector("#eventsDiv p");
+      const btn = document.querySelector("#btn"); // select object
+
+      // mouse events
+
+      // click event - anon function (simple log)
+      btn.addEventListener("click", () => {
+        console.log("button clicked"); // add event 'click' and anon function (to do). Only envokes when pressed
+      });
+
+      // click event - callback function (change colors)
+      btn.addEventListener("click", changeColors); // callback function, that is not envoked
+
+      function changeColors() {
+        if (heading.classList.contains("red")) {
+          heading.classList.remove("red");
+        } else {
+          heading.classList.add("red");
+        }
+      }
+
+      // other mouse events
+      //  click - fires after full action
+      //  mousedown - button is pressed
+      //  mouseup - button is released
+      //  mouseenter - moved into element
+      //  mouseleave - moved out of an element
+
+      // key events
+
+      const textInput = document.querySelector("#textInput");
+
+      // keypress - when key is pressed
+      textInput.addEventListener("keypress", () => {
+        console.log("you pressed a key");
+      });
+      // keydown - when key is down
+      textInput.addEventListener("keydown", () => {
+        console.log("you downed a key");
+      });
+      //keyup - when key is released
+      textInput.addEventListener("keyup", () => {
+        // console.dir(textInput); - logs all properties, see the 'value' shows the key pressed
+        console.log(textInput.value);
+      });
+    </script>
+    <h2>Event Object</h2>
+    <a href="#" id="link">random link</a>
+    <!-- <style>
+      #link {
+        display: inline-block;
+        margin-top: 100vh;
+      }
+    </style> -->
+    <script>
+      // heading = document.querySelector("h2");
+      // text = document.querySelector("#eventsDiv p");
+      // btn = document.querySelector("#btn");
+      const link = document.querySelector("#link");
+
+      // store object as an 'event'
+      heading.addEventListener("click", function (event) /*store object as 'event'*/ {
+        console.log(event);
+        heading.classList.add("something");
+      });
+      // currentTarget - more accurate
+      btn.addEventListener("click", function (evt) /* use object 'evt' to access current target*/ {
+        console.log(evt.currentTarget);
+        evt.currentTarget.classList.add("blue");
+      });
+      // event.type - tells you its a click event.
+
+      // preventDefault() - handy with forms
+      link.addEventListener("click", testFunc); // link won't go to top of page (deafault behaviour)
+      // using a callback
+      function testFunc(e) /*adding e during the callback*/ {
+        e.preventDefault();
+      }
+
+      // this
+      // confusing for it's application?
+      // replaces only event.currentTarget
+      // doesn't give full event object - just event.currentTarget
+      // gives a different binding, depending on context
+      // doesn't work with arrow function =>, this is instead still bound to window
+      // https://www.freecodecamp.org/news/when-and-why-you-should-use-es6-arrow-functions-and-when-you-shouldnt-3d851d7f0b26/
+    </script>
+
+    <h4>currentTarget v Target</h4>
+    <button class="btn">First</button> <br />
+    <button class="btn">Second <span>nested span</span></button> <br />
+    <button class="btn">Third</button> <br />
+    <script>
+      // currentTarget vs Target
+      const btns = document.querySelectorAll(".btn"); // ALL, creates a node list
+
+      // current target - refers to element which event handler has been attached to
+      btns.forEach(function (btn) /*loop through buttons (node list), add a listener*/ {
+        btn.addEventListener("click", function (e) {
+          e.currentTarget.style.color = "green";
+          // btn.style.color = "green";
+        });
+      });
+
+      // target - identifies the element where the event occured.
+      //    here, event listener is attached to the full button, but the nested span can be 'targeted'
+      btns.forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+          e.target.style.color = "red";
+          console.log(e.target);
+          console.log(e.currentTarget);
+        });
+      });
+    </script>
+    <h4>Event bubbling, capturing, propogation</h4>
+    <p>selecting dynamic elements - elements added via JS</p>
+    <div class="container">
+      <h4 class="headingH4">i'm inside a container</h4>
+      <ul class="list-items">
+        <li class="item"><a href="#" class="link">link</a></li>
+        <li class="item"><a href="#" class="link">link</a></li>
+        <li class="item"><a href="#" class="link">link</a></li>
+      </ul>
+      <!--(li.item>a.list{link})*3-->
+      <button id="btn2" class="btn">click me</button>
+    </div>
+    <script>
+      // bubbling - click the element first, then bubbles up -- default
+      // propogation - order the events are fired
+      // capturing - fires at the root and fires until reaches target
+
+      const container = document.querySelector(".container");
+      const list = document.querySelector(".list-items");
+      const headingH4 = document.querySelector("#headingH4");
+      const btn2 = document.querySelector("#btn2");
+
+      list.addEventListener("click", showBubbling);
+      // container.addEventListener("click", showBubbling);
+
+      // bubbling - this is the default behaviour, any element clicked fires it's parent listener
+      function showBubbling(e) {
+        console.log("current target", e.currentTarget); // this show the List, as that is where the listener is
+        console.log("target", e.target); // this picks the actual list item within the list, even when the list item was not targeted
+        e.preventDefault(); // stops page going up
+        if (e.target.nodeName == "A") {
+          /*checks for anchor tag A, then runs code*/
+          console.log("link clicked!");
+        }
+      }
+
+      // dynamic element creation, listen to events.
+
+      btn2.addEventListener("click", function () {
+        const newH5 = document.createElement("h5");
+        newH5.textContent = "new dynamic sexy heading";
+        container.appendChild(newH5);
+      });
+
+      // create an event on the dynamic new heading
+      container.addEventListener("click", function (e) {
+        if (e.target.nodeName == "H5") {
+          console.log("you clicked a dynamic object!");
+        }
+      });
+    </script>
+
+    <h4>Window DOM content loaded</h4>
+    The DOMContentLoaded event fires when the initial HTML document has been completely loaded and
+    parsed, without waiting for stylesheets, images, and subframes to finish loading. The load event
+    is fired when the whole page has loaded, including all dependent resources such as stylesheets
+    and images. preload pre-loader
+
+    <!-- // window.addEventListener("DOMContentLoaded", () => {
+      //   console.log("shakeand");
+      // });
+      // https://gomakethings.com/you-probably-dont-need-a-domcontentloaded-event-in-your-javascript/ -->
+
+    <h4>Form Submission</h4>
+    <p>
+      high level tutorial: <br />
+      listening to form submit <br />
+      prevent default <br />
+      how to get a value <br />
+    </p>
+    <form action="" id="form">
+      <input type="text" id="nameInput" /> <br />
+      <input type="password" id="password" /> <br />
+      <input type="submit" value="submit" /> <br />
+    </form>
+    <script>
+      const form = document.querySelector("#form");
+      const nameInput = document.querySelector("#nameInput");
+      const password = document.querySelector("#password");
+
+      // add event listener to the submit button
+      form.addEventListener("submit", function (e) {
+        e.preventDefault(); // stops the page refreshing
+        console.log("form submitted");
+        console.log(nameInput.value);
+        console.log(password.value);
+      });
+    </script>
+    <h4>Local storage - web storage API</h4>
+    session storage - persists while tab is open <br />
+    local storage - persists with open/close of browser
+    <script>
+      // view in dev tools, application (not console)
+
+      // storing simple key & value:
+
+      // setItem(key, value)
+      localStorage.setItem("name", "John");
+      localStorage.setItem("name", "Andrew"); // overrides previous 'name' value
+      localStorage.setItem("friend", "John");
+      localStorage.setItem("job", "coder");
+      localStorage.setItem("address", "123 fake st");
+
+      // getItem(key)
+      const localName = localStorage.getItem("name");
+      console.log(localName);
+
+      // removeItem(key)
+      localStorage.removeItem("address");
+
+      // clear
+      // localStorage.clear();
+
+      // Storing more complex - array, object etc
+
+      // JSON.stringify()
+      // JSON.parse()
+
+      const friends = ["anna", "susy", "bob"];
+      localStorage.setItem("friends", JSON.stringify(friends)); // need to pass the array as JSON string
+
+      const friendArr = JSON.parse(localStorage.getItem("friends")); // return value from JSON string
+      console.log(friendArr[0]);
+    </script>
+
+    <h4>mulimedia control</h4>
+    https://www.w3schools.com/tags/ref_av_dom.asp
+  </body>
+</html>

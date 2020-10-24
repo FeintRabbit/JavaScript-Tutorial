@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <h1 id="heading">jQuery</h1>
+    <h2>Used to simplify:</h2>
+    <ul class="list">
+      <li>HTML DOM Manipulation</li>
+      <li>Event Handling</li>
+      <li>Animations</li>
+      <li>AJAX</li>
+    </ul>
+
+    <p>
+      jQuery has some downsides as it can be a bit slower in performance, and lead to not learning
+      JS properly. I'm going to try and learn the 'hard' way for most of the JS, but jQuery where
+      there would be no good alternative. <br />
+      <ul>
+        <li>ajax ($.get) seems <u> MUCH</u> easier than JS AJAX, and JS fetch still looks complex &
+          doesn't yet seem too well adopted or as easy for me to understand</li>
+          <li>Multiple event per listener</li>
+      </ul>
+    </p>
+
+    <div>
+      <h2>Basic jQuery syntax</h2>
+      <p>This text will be hidden!</p>
+      <button id="phidebutton">Hide</button>
+      <script>
+        // Jquery snytax: $(selector).action()
+
+        // $ - desfine access to jQuery
+        // (selector) to find html elements - this is a css selector
+        // action() to be performed on the elements
+
+        $(document).ready(function () {
+          // document ready used arround functions. Deprecated by $(function() { //code here  })
+
+          $("#phidebutton").click(function () {
+            $("p").hide();
+            //when the 'button' tag in clicked, action = function() select the p and hide.
+          });
+        });
+      </script>
+    </div>
+
+    <div>
+      <h2>Element selection</h2>
+      <script>
+        //Element Id
+
+        var x = $("#heading"); // jQuery
+        var x = document.getElementById("heading"); // JavaScript
+        var x = document.querySelector("#heading"); // JavaScript (querySelector uses a CSS string)
+
+        //Element Class
+        var x = $(".list"); // jQuery
+        var x = document.getElementsByClassName("list"); // JavaScript
+        var x = document.querySelector(".list"); // JavaScript (querySelector uses a CSS string)
+
+        //Tag Name
+        var ptag = $("p"); //jQuery
+        var ptag = document.getElementsByTagName("p"); // JavaScript
+        var ptag = document.querySelector("p"); // JavaScript (querySelector uses a CSS string)
+      </script>
+    </div>
+
+    <div>
+      <h2>jQuery events</h2>
+      <p>Click this paragraph to log in console</p>
+      <input />
+      <script>
+        // Other mouse events:
+        // click
+        // dblclick
+        // hover (combines mouseenter & mouseleave)
+        // mouseenter
+        // mouseleave
+        // mousedown
+        // mouseup
+
+        $(function () {
+          $("p").click(function () {
+            console.log("Paragraph clicked :+1");
+          });
+        });
+
+        // Input events:
+        // focus - click in the input
+        // blur - leave input field
+        // change - text in the input changes
+
+        $(function () {
+          $("input").focus(function () {
+            console.log("You clicked in the box!");
+          });
+        });
+
+        //longhand version, allows for more events at once
+
+        $(function () {
+          $("p").on("click mouseenter", function () {
+            // click & mouseenter event result in the same function
+            console.log("Paragraph entered :+1");
+          });
+        });
+
+        $(function () {
+          $("li").on({
+            // using an object to provide multiple events and functions (key : value)
+            click: function () {
+              console.log("Clicked!");
+            },
+            mouseenter: function () {
+              console.log("hovered");
+            },
+          });
+
+          $("p").off("click");
+          // this turns off the click event mid way through the function.
+
+          $("li").one("mouseleave", function () {
+            // only runs once for this event
+            console.log("unhovered (one log event)");
+          });
+        });
+      </script>
+    </div>
+    <div style="padding-bottom: 500px;">
+      <h2>Effects</h2>
+      <p>Working with jQuery effects</p>
+      <img id="showhide" src="https://via.placeholder.com/350x150" alt="" />
+      <button id="hidebutton">Hide</button>
+      <button id="showbutton">Unhide</button><br />
+      <img id="toggleimg" src="https://via.placeholder.com/350x150" alt="" />
+      <button id="togglebutton" onclick="showhide()">Hide</button><br />
+      <script>
+        $(function () {
+          $("#hidebutton").click(function () {
+            $("#showhide").hide("slow", "swing");
+          });
+          $("#showbutton").click(function () {
+            $("#showhide").show("fast");
+          });
+          $("#togglebutton").click(function () {
+            $("#toggleimg").toggle();
+          });
+        });
+        // failed attempts
+        // function showhide() {
+        //   var buttonlabel = document.getElementById("togglebutton").innerHTML;
+        //   if (buttonlabel == "Hide") {
+        //     buttonlabel = "Show";
+        //   } else buttonlabel = "Hide";
+        //   console.log(buttonlabel);
+        // }
+        // function showhide() {
+        //   // var buttonlabel = document.getElementById("togglebutton").innerHTML;
+        //   if (document.getElementById("togglebutton").innerHTML == "Hide") {
+        //     document.getElementById("togglebutton").innerHTML = "Show";
+        //   } else document.getElementById("togglebutton").innerHTML = "Hide";
+        //   console.log(document.getElementById("togglebutton").innerHTML);
+        // }
+        function showhide() {
+          //change the button from show to hide (with toggle effect)
+          var buttonlabel = document.getElementById("togglebutton");
+          if (buttonlabel.innerHTML == "Hide") {
+            buttonlabel.innerHTML = "Show";
+          } else buttonlabel.innerHTML = "Hide";
+          console.log(buttonlabel.innerHTML);
+        }
+      </script>
+
+      <h4>Other animation examples</h4>
+      <button id="slideUp">slideUp</button>
+      <button id="slideDown">slideDown</button><br />
+      <button id="fadeOut">fadeOut</button>
+      <button id="fadeIn">fadeIn</button><br />
+      <h4 id="animationh4">Animated text</h4>
+      <img id="animationimg" src="https://via.placeholder.com/350x150" alt="" />
+      <br />
+      <script>
+        $(function () {
+          $("#slideUp").click(function () {
+            $("#animationimg").slideUp(500);
+            $("#animationh4").slideUp(500);
+          });
+          $("#slideDown").click(function () {
+            $("#animationimg").slideDown(1500);
+            $("#animationh4").slideDown(1500);
+          });
+          $("#fadeOut").click(function () {
+            $("#animationimg").fadeOut("normal");
+          });
+          $("#fadeIn").click(function () {
+            $("#animationimg").fadeIn("normal");
+          });
+        });
+
+        // Other effects:
+        // add class (any CSS, like make it blue!)
+        // stop animation
+        // animation.delay().animation to chain animations with a delay
+      </script>
+    </div>
+  </body>
+</html>

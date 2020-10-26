@@ -339,7 +339,15 @@
       btn.addEventListener("click", increment);
       btn.removeEventListener("click", increment);
 
+      // ***** another method *****
+      // when working with constructors, set 'this' on the class as a variable
+      // then use 'self' instead of 'this' to refer to the class
+      let self = this;
+      // https://stackoverflow.com/questions/40976031/what-does-let-self-this-mean-in-javascript-typescript
+      // https://stackoverflow.com/questions/962033/what-underlies-this-javascript-idiom-var-self-this/962040
+
       // invoking in an anon function - (not sure of edge cases, cannot be removed)
+      // NOTE, this isn't helpful for a class, becuase counter would be 'this' again
       // btn.addEventListener("click", function () {
       //   counter.increment();
       // });

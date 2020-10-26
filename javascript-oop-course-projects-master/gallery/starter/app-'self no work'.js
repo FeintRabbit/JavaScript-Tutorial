@@ -13,51 +13,44 @@ function Gallery(element) {
   this.list = [...element.querySelectorAll(".img")];
   // target modal & elements (one on the doc, not per each gallery)
   this.modal = getElement(".modal");
-  this.modalImg = getElement(".main-img");
+  this.modalImg = getElement(".modal-img");
   this.imageName = getElement(".image-name");
   this.modalImages = getElement(".modal-images");
   this.closeBtn = getElement(".close-btn");
   this.nextBtn = getElement(".next-btn");
   this.prevBtn = getElement(".prev-btn");
+  // self
+  let self = this; // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 1. set self = this (class ref) ✓
   // bind functions
-  this.closeModal = this.closeModal.bind(this);
-  this.nextImage = this.nextImage.bind(this);
-  this.prevImage = this.prevImage.bind(this);
-  this.selectImage = this.selectImage.bind(this);
+  // this.closeModal = self.closeModal;
   // container event (not function bind-ed)
-  this.container.addEventListener(
-    "click",
-    function (e) {
-      // if an image is clicked
-      if (e.target.classList.contains("img")) {
-        // open model, with target (img clicked) & list of all imgs in container
-        this.openModal(e.target, this.list);
-      }
-    }.bind(this)
-  );
+  this.container.addEventListener("click", function (e) {
+    // if an image is clicked
+    if (e.target.classList.contains("img")) {
+      // open model, with target (img clicked) & list of all imgs in container
+      self.openModal(e.target, self.list); // <<<<<<<<<<<<<<<< 2. call func, with ref to 'self' ✓
+    }
+  });
 }
 Gallery.prototype.openModal = function (selectedImage, list) {
   // 'this' is bound to the Gallery
   console.log(selectedImage, list);
   // set the small images
-  this.modalImages.innerHTML = list
+  this.modalImages.innerHTML = list // <<<<<<<<<<<<<<<< 3a. 'this' here refs to 'self' ✓
     .map(function (image) {
-      return `<img src="${image.src}" title="${image.title}" data-id="${image.dataset.id}" 
+      return `<img src="${image.src}" title=${image.title}" data-id="${image.dataset.id}" 
       class="${selectedImage.dataset.id === image.dataset.id ? "modal-img selected" : "modal-img"}"/>`;
     })
     .join("");
 
-  // open modal
+  // set main image
+  this.setMainImage(selectedImage); // <<<<<<<<<<<<<<<< 3b. 'this' here refs to 'self' ✓
   this.modal.classList.add("open");
 
-  // set main image
-  this.setMainImage(selectedImage);
-
   // set event listeners
-  this.closeBtn.addEventListener("click", this.closeModal);
+  this.closeBtn.addEventListener("click", this.closeModal); // 4. ⨉⨉⨉⨉⨉⨉⨉⨉⨉ at this point, 'this' is pointing at the btn, so using 'self' would fix. But func has no ref to 'self' anymore, due to being declared in the scope of the class. Binding this func is still needed.
   this.nextBtn.addEventListener("click", this.nextImage);
   this.prevBtn.addEventListener("click", this.prevImage);
-  this.modalImages.addEventListener("click", this.selectImage);
 };
 Gallery.prototype.setMainImage = function (selectedImage) {
   // 'this' is bound to the Gallery
@@ -73,35 +66,13 @@ Gallery.prototype.closeModal = function () {
   this.closeBtn.removeEventListener("click", this.closeModal);
   this.nextBtn.removeEventListener("click", this.nextImage);
   this.prevBtn.removeEventListener("click", this.prevImage);
-  this.modalImages.removeEventListener("click", this.selectImage);
 };
 Gallery.prototype.nextImage = function () {
-  // selected what is currently 'selected'
-  const selected = this.modalImages.querySelector(".selected");
-  // select what will be the next image (or the first image in arr)
-  const next = selected.nextElementSibling || this.modalImages.firstElementChild;
-  // chagnge the 'selected' class
-  selected.classList.remove("selected");
-  next.classList.add("selected");
-  // set main image
-  this.setMainImage(next);
+  //
 };
 Gallery.prototype.prevImage = function () {
-  const selected = this.modalImages.querySelector(".selected");
-  const prev = selected.previousElementSibling || this.modalImages.lastElementChild;
-  selected.classList.remove("selected");
-  prev.classList.add("selected");
-  this.setMainImage(prev);
-};
-Gallery.prototype.selectImage = function (e) {
-  if (e.target.dataset.id) {
-    const selected = this.modalImages.querySelector(".selected");
-    this.setMainImage(e.target);
-    selected.classList.remove("selected");
-    e.target.classList.add("selected");
-  }
+  //
 };
 
 const nature = new Gallery(getElement(".nature"));
-console.log(nature);
 const city = new Gallery(getElement(".city"));

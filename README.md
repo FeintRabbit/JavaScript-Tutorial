@@ -1,7 +1,3 @@
-JavaScript notes & mini projects from tutorial course. Not hosted live.
-
-https://www.vanillajavascriptprojects.com/
-
 # NOTES:
 
 ## DOM Projects
@@ -23,3 +19,11 @@ Project 14 (grocery bud to-do list)
 - Event delegation - avoiding event delegation for the buttons, by adding event listeners as they are added to the DOM
 - JSON stringify & parse, CRUD values in local storage
 - minor use of filter & map
+
+## OOP Projects
+
+Project 2 (Gallery)
+
+- 'this' for event listeners on a class. Directing 'this' within a callback function. Two methods;
+  - '.bind(this)' - bind the whole callback function codeblock to 'this' (of the class)
+  - 'let self = this;' - declare a variable 'self' on the class which refs the class 'this', then use in place of 'this' within the callback, negating the need for 'this'.

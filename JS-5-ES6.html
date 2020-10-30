@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h1>ES6</h1>
+      ES6 + (ES7, 8 etc)
+    </div>
+    <div>
+      <!-- ------------ -->
+      <!-- class syntax -->
+      <!-- ------------ -->
+      <h2>ES6 class syntax</h2>
+      syntatic sugar for constructor function & prototypal inheritance
+    </div>
+    <script>
+      console.log(">>> CLASS <<<");
+      // set-up using class keyword
+      class Account {
+        // constructor method sets up per instance props/methods
+        constructor(name, initialBalance) {
+          this.name = name;
+          this.balance = initialBalance;
+          this.deposit = function (amount) {
+            this.balance += amount;
+            console.log(`Hello ${this.name}, your balance is ${this.balance}`);
+          };
+        }
+        // prototypes
+        bank = "CHASE";
+        withdraw(amount) {
+          this.balance -= amount;
+          console.log(`Hello ${this.name}, your balance is ${this.balance}`);
+        }
+      }
+      // create new obj of class
+      const sheila = new Account("sheila", 100);
+      console.log(sheila);
+      sheila.deposit(50);
+    </script>
+    <div>
+      <!-- ---------------------- -->
+      <!------ VAR, LET, CONST ----->
+      <!-- Function & Block scope -->
+      <!-- ---------------------- -->
+      <h2>VAR vs. LET & CONST</h2>
+      var - declaration is hoisted, without value. - undefined if referenced before value assigned. <br />
+      var - only function scoped, allows redefine (redeclare) <br />
+      let & const - not hoisted, need to be declared before use <br />
+      let & const, block scoped {in curlies} <br />
+      let & const, don't allow you to redefine (redeclare) a variable (preventing accidents) <br />
+      let - allows value to be updated <br />
+      const - Cannot update primative type values (string, types etc). Can update reference type values (arrays, object properties. i.e. person.name = x )
+      <br />
+    </div>
+    <div>
+      <!-- ------------------->
+      <!-- Template strings -->
+      <!-- ---------------- -->
+      <h2>Template literal / Template string</h2>
+      <div class="result"></div>
+      <div class="quote"></div>
+    </div>
+    <script>
+      const bob = "bob";
+      const jane = "jane";
+
+      const personBob = {
+        name: "kyle",
+        job: "developer",
+        hobbies: ["surfing", "poopin", "skeezin"],
+      };
+
+      // string concat (old way)
+      const phrase = "My first name is " + bob + " and my last name is '" + jane + "'";
+      console.log(phrase);
+
+      // template string (ES6)
+      const phrase2 = `My first name is ${bob} and my last name is '${jane}'`;
+      console.log(phrase2);
+
+      // HTML template string
+      const result = document.querySelector(".result");
+
+      result.innerHTML = `
+      <h4>${personBob.name}</h4>
+      <p> is a ${personBob.job} and loves:</p>
+      <ul>${personBob.hobbies
+        .map(hobby => {
+          return `<li>${hobby}</li>`;
+        })
+        .join("")}</ul>`;
+
+      // tagged template literal
+      const author = "Some Author";
+      const statement = "Some Statement";
+      const quoteDOM = document.querySelector(".quote");
+
+      // this template literal is now tagged
+      const quote = highlight`Here is the ${statement} by ${author} and it couldn't be more true`;
+
+      function highlight(text, ...args) {
+        // map the content to a new arr and add tags.
+        const awesomeText = text.map((item, index) => {
+          return `${item} <strong class="blue">${args[index] || ""}</strong>`;
+        });
+        // return joined arr (as one string) now with tags
+        return awesomeText.join("");
+      }
+      quoteDOM.innerHTML = quote;
+    </script>
+    <div>
+      <!-- ---------------- -->
+      <!--- Arrow functions -->
+      <!-- ---------------- -->
+      <h2>Arrow functions</h2>
+      <button class="btn">click me</button>
+    </div>
+    <script>
+      console.log(">>> ARROW FUNCTIONS <<<");
+
+      // Cannot be named. must be assigned to value, or used as callback.
+
+      // basic arrows
+      // one liner doesn't need return or curly braces!
+      const sayHi = () => console.log("hello");
+      sayHi();
+
+      // one liner doesn't need paren on inputs!
+      const double = value => value * 2;
+      console.log(double(5));
+
+      // multi line needs 'return' & curly brackets, multiple params needs parens
+      const multiply = (num1, num2) => {
+        const result = num1 * num2;
+        return result;
+      };
+      console.log(multiply(2, 5));
+
+      // return object (needs brackets)
+      const object = () => ({ name: "john", age: 25 });
+      console.log(object());
+
+      // Callbacks with arrow functions!!
+      const numbers = [1, 2, 3, 4, 5, 6];
+
+      // filter method
+      const big = numbers.filter(number => number > 2); // one liner
+      console.log(big);
+
+      // still follows the above rules
+      const big2 = numbers.filter((number, index) => {
+        console.log(index);
+        return number > 2;
+      });
+      console.log(big2);
+
+      // event listener
+      const btn = document.querySelector(".btn");
+      btn.addEventListener("click", () => console.log("click!"));
+
+      // ****** Arrows and THIS ******
+      // reg function refers to parent, left of dot
+      // arrow function refer to it's current surrounding scope when called
+      // (fails when used on window, good when used in callback)
+      console.log(">>> ARROW FUNCTIONS THIS <<<");
+
+      const bobJane = {
+        firstName: "bob",
+        lastName: "jane",
+        sayNameFunc: function () {
+          console.log(this);
+          console.log(`my name is ${this.firstName} ${this.lastName}`);
+        },
+        sayNameArrow: () => {
+          console.log(this);
+          console.log(`my name is ${this.firstName} ${this.lastName}`);
+        },
+        sayNameFuncTimeout: function () {
+          setTimeout(function () {
+            console.log(this);
+            console.log(`my name is ${this.firstName} ${this.lastName}`);
+          }, 500);
+        },
+        sayNameArrowTimeout: function () {
+          setTimeout(() => {
+            console.log(this);
+            console.log(`my name is ${this.firstName} ${this.lastName}`);
+          }, 500);
+        },
+      };
+      bobJane.sayNameFunc(); // 'this' refers to bobJane object
+      bobJane.sayNameArrow(); // 'this' refers to window object.. Bugger!
+
+      // disabled for console clarity
+      // bobJane.sayNameFuncTimeout(); // 'this' refers to the window, via timeout function (fail).
+      // Could be resolved using 'let self = this;' or use arrow:
+      // bobJane.sayNameArrowTimeout(); // 'this' refers to the object scope (good!)
+    </script>
+    <div>
+      <!-- ------------------- -->
+      <!--- Default parameters -->
+      <!-- ------------------- -->
+      <h2>Default parameters</h2>
+    </div>
+    <script>
+      // parameter = X, assigns a default parameter to the function
+      function myFunkyTown(counter = 5) {
+        counter++;
+        console.log(counter);
+      }
+      // it will be used in the function by default, or overridden.
+      myFunkyTown(); // uses default (5) and returns 6
+      myFunkyTown(10); // uses parameters anre turns 11
+    </script>
+    <div>
+      <!-- -------------- -->
+      <!--- Destructuring -->
+      <!-- -------------- -->
+      <h2>Destructuring</h2>
+      Arrays, objects, func params
+    </div>
+    <script>
+      // **** Array destructuring ****
+
+      const fruits = ["orange", "banana", "lemon"];
+      const friends = ["john", "peter", "rob", "anna", "kelly"];
+
+      // old way
+      const orange = fruits[0];
+      const banana = fruits[1];
+      const lemon = fruits[2];
+      console.log(orange, banana, lemon); // "orange", "banana", "lemon"
+
+      // destructuring
+      // sequential up in index
+      // name is just placeholder, can skip an index with ,,
+      // access over array = undefined
+      const [john, , rob, pants, cheese, toes] = friends;
+      console.log(john, rob, pants, cheese, toes); // "john", "rob", "anna", "kelly", undefined
+
+      // quick varaible swap
+      let first = "first";
+      let second = "second";
+
+      [second, first] = [first, second];
+
+      console.log(first, second);
+
+      // **** Object destructuring ****
+
+      const car = {
+        make: "holden",
+        model: "astra",
+        tyres: {
+          front: "great",
+          back: "bad",
+        },
+      };
+
+      // old way
+      // const make = car.make;
+      // const frontTyres = car.tyres.front;
+      // console.log(make, frontTyres); // 'holden' 'great'
+
+      // destructuring
+      // property names need to match
+      // get to vals within objs using propery:{name}
+      // can rename using alias - property:alias
+
+      const {
+        make: brand,
+        model,
+        tyres: { front },
+        tyres: { back: rear },
+      } = car;
+
+      console.log(brand, model, front, rear);
+
+      // **** Function destructuring ****
+
+      // could do in like above (same rules apply)
+      function printCar(obj) {
+        const { make, model } = car;
+        console.log(make, model);
+      }
+
+      // or destructure in input
+      function printCar2({ make, model }) {
+        console.log(make, model);
+      }
+
+      printCar(car);
+      printCar2(car);
+    </script>
+    <div>
+      <!-- ------------ -->
+      <!--- For of loop -->
+      <!-- ------------ -->
+      <h2>For of loop</h2>
+    </div>
+    <script>
+      // loops through values of iterable objects
+      // i.e. string, array, map, set - NOT objects
+      // can use break, continue (unlike forEach)
+
+      for (const fruit of fruits) {
+        console.log(fruit);
+      }
+
+      for (const fruit of fruits) {
+        if (fruit === "banana") {
+          break;
+        }
+        console.log(fruit);
+      }
+    </script>
+    <div>
+      <!-- ---------------- -->
+      <!--- Spread Operator -->
+      <!-- ---------------- -->
+      <h2>Spread Operator</h2>
+    </div>
+    <script></script>
+  </body>
+</html>

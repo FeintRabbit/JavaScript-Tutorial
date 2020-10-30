@@ -19,12 +19,9 @@
 
     <h2>string properties and methods</h2>
     <p>
-      <a href="http:/www.w3schools.com/js/js_string_methods.asp" target="_blank" rel="noopener noreferrer">
-        W3 school - string methods
-      </a>
+      <a href="http:/www.w3schools.com/js/js_string_methods.asp" target="_blank" rel="noopener noreferrer"> W3 school - string methods </a>
     </p>
-    A method is a function within an object. It's <b>declared</b> on the <b>object</b>, then <b>invoked</b> using
-    <b>object.methodName()</b> <br />
+    A method is a function within an object. It's <b>declared</b> on the <b>object</b>, then <b>invoked</b> using <b>object.methodName()</b> <br />
     JS created a wrapper string object when we create a string. <br />
     String methods are build in functions you can use on a string.
     <script>
@@ -41,11 +38,14 @@
       console.log(text.charAt(text.length - 1)); // get last char
       console.log(text.indexOf("P")); // index number of letter P
       console.log(text.trim());
-      console.log(text.startsWith("peter")); // the case is wrong, and there is a space
-      console.log(text.trim().toLowerCase().startsWith("peter")); // trims the space and sets text to lower case before checking
-      console.log(text.includes("eter")); // does it contain this text?
       console.log(text.slice(0, 2)); // gets the value from one value until the next
       console.log(text.slice(-3)); // creates a substring
+      console.log(text.trim().toLowerCase().startsWith("peter")); // trims the space and sets text to lower case before checking
+      // ES6 methods
+      console.log(text.startsWith("Peter")); // does it start with this text? returns T/F
+      console.log(text.endsWith("Jordan")); // does it end with this text? returns T/F
+      console.log(text.includes("eter")); // does it contain this text? returns T/F
+      console.log(text.repeat("Jordan"));
     </script>
 
     <h2>ES6 FYI - template literals</h2>
@@ -89,9 +89,7 @@
 
     <h2>
       Arrays and for loop
-      <a href="https://www.youtube.com/watch?v=2Ji-clqUYnA&t=17194s" target="_blank" rel="noopener noreferrer">
-        (full name exercise)</a
-      >
+      <a href="https://www.youtube.com/watch?v=2Ji-clqUYnA&t=17194s" target="_blank" rel="noopener noreferrer"> (full name exercise)</a>
     </h2>
     <script>
       const firstName = ["anna", "susy", "bob"];
@@ -108,9 +106,7 @@
     </script>
     <h2>
       Functions, return, if, arrays, for loop -
-      <a href="https://www.youtube.com/watch?v=2Ji-clqUYnA&t=17808s" target="_blank" rel="noopener noreferrer">
-        calculate total exercise
-      </a>
+      <a href="https://www.youtube.com/watch?v=2Ji-clqUYnA&t=17808s" target="_blank" rel="noopener noreferrer"> calculate total exercise </a>
     </h2>
     <script>
       const gas = [20, 40, 100, 30];
@@ -248,9 +244,7 @@
       accpets CALLBACK function as argument, calls CB against each item in array <br />
       Key for React <br /><br />
       I've also used some
-      <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions"
-        >arrow functions</a
-      >
+      <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">arrow functions</a>
       for practice.
     </p>
     <div id="arrayOutput"></div>
@@ -425,20 +419,7 @@
       console.log(month + 1); // this gives 8
 
       // another way is to have a month array
-      var months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ];
+      var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
       console.log(months[month]);
 
@@ -455,17 +436,13 @@
       // year
       console.log(date.getFullYear());
 
-      const fullDateStr = `${dayNames[date.getDay()]}, ${date.getDate()} ${
-        months[date.getMonth()]
-      } ${date.getFullYear()}`;
+      const fullDateStr = `${dayNames[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
       console.log(fullDateStr);
 
       // you can also set a specific date
       const setDate = new Date("11 / 3 / 2020");
 
-      const fullSetDateStr = `${dayNames[setDate.getDay()]}, ${setDate.getDate()} ${
-        months[setDate.getMonth()]
-      } ${setDate.getFullYear()}`;
+      const fullSetDateStr = `${dayNames[setDate.getDay()]}, ${setDate.getDate()} ${months[setDate.getMonth()]} ${setDate.getFullYear()}`;
       console.log(fullSetDateStr);
 
       const setDateMan = new Date(2020, 10, 3, 13);

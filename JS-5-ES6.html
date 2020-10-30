@@ -319,12 +319,117 @@
         console.log(fruit);
       }
     </script>
+    <div id="spread">
+      <!-- ---------------------- -->
+      <!-- Spread / Rest Operator -->
+      <!-- ---------------------- -->
+      <h2>Spread / Rest Operator</h2>
+      <p>Spread/expand and iterable, individually indise a 'reciever'</p>
+      <p>NEW: Array / Objects are new values, NOT REFERENCES when using a spread.</p>
+      <p>Rest gathers/collects items to an arr/obj - useful when destructuring</p>
+      <span class="output"></span>
+    </div>
+    <script>
+      // spread STRING
+      const udemy = "udemy";
+      const letters = [...udemy];
+      console.log(letters);
+
+      // spread ARRAY
+      const boys = ["john", "peter", "bob"];
+      const girls = ["susan", "anna"];
+      const bestfriend = "arnold";
+
+      // spreads and creates a NEW array
+      const frionds = [...boys, bestfriend, ...girls];
+      console.log(frionds); // ["john", "peter", "bob", "arnold", "susan", "anna"]
+
+      // spread OBJECTS
+      // (ES2018 - ES8)
+      const newCar = { colour: "green", ...car };
+      console.log(newCar); // {colour: "green", make: "holden", model: "astra", tyres: {…}}
+
+      // spread DOM elements
+      // helps turn a DOM node list into an array to gain access to array methods
+      const docPs = document.querySelectorAll("#spread p");
+
+      const spreadPs = [...docPs].map(item => `<span>${item.textContent}</span>`).join("");
+      document.querySelector(".output").innerHTML = spreadPs;
+
+      // spread FUNCTION ARGS
+      // NOTE: rest for parameters, spread for arguments
+      const nums = [1, 2, 3, 6, 77, 88, 12, 16];
+      console.log(Math.max(...nums)); // 88
+
+      const hello = (p1, p2) => {
+        console.log(`hello ${p1} & ${p2}`);
+      };
+      hello(girls[0], girls[1]);
+      hello(...girls);
+
+      // Rest operator - Array
+
+      // fruits = ["orange", "banana", "lemon"];
+      const [one, ...rest] = fruits;
+      console.log(one, rest); // 'orange', (2) ["banana", "lemon"]
+
+      // Rest operator - obj
+
+      //car = { make: "holden", model: "astra", tyres: { front: "great", back: "bad" } };
+      const { make, ...rests } = car;
+      console.log(make, rests); // 'holden' {model: "astra", tyres: {…}}
+
+      // Rest operation - function
+      // NOTE: rest for parameters, spread for arguments
+
+      // this function RESTs the parameters
+      // i.e. any number of args passed will be used as the '...scores' array
+      const getAverage = (name, ...scores) => {
+        console.log(name); //andrew
+        console.log(scores); // [78, 90, 56]
+        let total = 0;
+        for (score of scores) {
+          total += score;
+        }
+        console.log(`${name}'s total score = ${total}`); // 244
+      };
+
+      getAverage("andrew", 78, 90, 56); // this function can take many scores after the name
+      getAverage("john", ...nums); // this function SPREADs the arguments
+    </script>
     <div>
       <!-- ---------------- -->
-      <!--- Spread Operator -->
+      <!--- Array of / from -->
       <!-- ---------------- -->
-      <h2>Spread Operator</h2>
+      <h2>Array of / from</h2>
+      <p>allows for 'map' type mutation when creating arrays - see DOM example</p>
     </div>
-    <script></script>
+    <script>
+      // Array of
+      // new Array instance from variable number of args
+      const toots = Array.of("great", 2, true);
+      console.log(toots); // ["great", 2, true]
+
+      // Array from
+      // returns Array Object from any object with length, or an iterable object
+      // Array-like/ish into array - string, nodeList, Set
+
+      // Array from string
+      console.log(Array.from(udemy)); // ["u", "d", "e", "m", "y"]
+
+      // Array from arguments object
+      function countTotal() {
+        console.log(arguments);
+        let total = Array.from(arguments).reduce((total, curr) => (total += curr));
+        console.log(total);
+      }
+      countTotal(1, 2, 3, 4, 5);
+
+      // DOM node list
+      const text = Array.from(document.querySelector("#spread p"), item => {
+        return `<span>${item.textContent}</span>`;
+      }).join("");
+      // insert into HTML
+    </script>
   </body>
 </html>

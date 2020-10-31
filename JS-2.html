@@ -237,6 +237,9 @@
       }
       greeting("Steph", greetTime);
     </script>
+    <!-- ------------- -->
+    <!-- Array methods -->
+    <!-- ------------- -->
     <h2>Array methods</h2>
     <p>
       forEach, map, filter, find, reduce <br />
@@ -272,7 +275,7 @@
         { name: "anna", age: 35, position: "the boss", id: 4, salary: 500 },
       ];
 
-      // forEach
+      // ******* forEach *******
       // does not return new array
       //// for each item in array (currentValue), call it something in callback function - 'parameter, i, etc', loop through the array
 
@@ -292,7 +295,7 @@
         console.log(peets.name); // outputs each name
       });
 
-      // map
+      // ******* map *******
       // returns a new array, does not change array size
       // allows for manipulation of the array values and set to new
       // key for react
@@ -323,7 +326,7 @@
       console.log(nameHeading);
       document.querySelector("#arrayOutput").innerHTML = nameHeading.join("");
 
-      // filter
+      // ******* filter *******
       // returns new array, can change array size
       // returns based on condition. i.e. one iteration per match
 
@@ -342,7 +345,7 @@
       });
       console.log(snrDevelopers); // returns all senior developers (none), empty array
 
-      // find
+      // ******* find *******
       // returns single instance from data (could be object, array etc) This example is an object.
       // returns first match, if none (undefined)
       // use for getting single unquie value
@@ -365,7 +368,7 @@
       });
       console.log(personIdFilter[0].name); // filter returns an array (even with 1 value), so you need to navigate that array then item.
 
-      // reduce
+      // ******* reduce *******
       // interates, with a callback function
       // reduces to a single value
       // 2 parameters:
@@ -381,8 +384,24 @@
         return accTotal;
       }, 0);
       console.log(total);
+
+      // ******* Every / Some *******
+      // returns true/false
+      const grades = ["A", "B", "A", "B", "C"];
+      const goodGrades = ["A", "B", "A", "B"];
+
+      // every - checks that all elements in array meet condition
+      let allGoodGrades = grades.every(grade => grade !== "C"); // FALSE
+      allGoodGrades = goodGrades.every(grade => grade !== "C"); // TRUE
+
+      // some - checks that at least one element in array meets coniditon
+      let oneBadGrade = grades.some(grade => grade === "C"); // TRUE
+      oneBadGrade = goodGrades.some(grade => grade === "C"); // FALSE
     </script>
 
+    <!-- ---- -->
+    <!-- Math -->
+    <!-- ---- -->
     <h2>Math!</h2>
     <p>Using methods, from a built in Math object</p>
     <script>

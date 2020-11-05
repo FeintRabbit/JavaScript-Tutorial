@@ -27,3 +27,13 @@ Project 2 (Gallery)
 - 'this' for event listeners on a class. Directing 'this' within a callback function. Two methods;
   - '.bind(this)' - bind the whole callback function codeblock to 'this' (of the class)
   - 'let self = this;' - declare a variable 'self' on the class which refs the class 'this', then use in place of 'this' within the callback, negating the need for 'this'.
+
+Project 3
+
+- Ideal Class usage. Setting up methods using appropriate normal or arrow functions (Not using .bind())
+
+## AJAX Projects
+
+Project 1 (joke)
+
+- AJAX using the promise, fetch & async/await methods

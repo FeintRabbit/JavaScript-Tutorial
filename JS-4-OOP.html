@@ -75,8 +75,8 @@
       <h1>This keyword</h1>
       Points to the left of the dot (only works when left of the dot is the object) <br />
 
-      In regular function (not arrow),'this' is determined by "HOW" a function is invoked. - if method invoked with
-      nothing left of . dot, defaults to global (window object) <br />
+      In regular function (not arrow),'this' is determined by "HOW" a function is invoked. - if method invoked with nothing left of . dot, defaults to global
+      (window object) <br />
 
       <button class="btn1">click</button>
       <button class="btn2">click</button>
@@ -400,6 +400,68 @@
       andy.showBalance();
       andy.deposit(100);
       andy.withdraw(3500);
+    </script>
+    <div>
+      <!-- ------------- -->
+      <!-- Class example -->
+      <!-- ------------- -->
+      <h1>Class example</h1>
+    </div>
+    <script>
+      // this example uses Class syntax, and a mix of regular & arrow functions.
+      // reg funcs are used for the methods, as they'll be used in obj.method context, and 'this' will therefore be 'left of the dot' and correctly point to the object
+      // arrow functs are mainly used within a callback, this avoids the need to .bind(this) as they are called within the SCOPE of the class and therefore refer to that obj (invoked class).
+
+      class Review {
+        constructor(element, personId = 0) {
+          this.element = document.querySelector(element);
+          this.personId = personId;
+          // DOM elements
+          this.authorImg = this.element.querySelector("#person-img");
+          this.author = this.element.querySelector("#author");
+          this.job = this.element.querySelector("#job");
+          this.info = this.element.querySelector("#info");
+
+          // load
+          this.load();
+
+          // BTNs
+          this.nextBtn = this.element.querySelector(".next-btn");
+          this.prevBtn = this.element.querySelector(".prev-btn");
+          this.randBtn = this.element.querySelector(".random-btn");
+
+          // add event listeners
+          this.nextBtn.addEventListener("click", () => this.next());
+          this.prevBtn.addEventListener("click", () => this.prev());
+          this.randBtn.addEventListener("click", () => this.rand());
+        }
+        // DOM load function
+        load() {
+          this.authorImg.src = reviews[this.personId].img;
+          this.author.textContent = reviews[this.personId].name;
+          this.job.textContent = reviews[this.personId].job;
+          this.info.textContent = reviews[this.personId].text;
+        }
+        // event buttons
+        next() {
+          this.personId++;
+          if (this.personId > reviews.length - 1) {
+            this.personId = 0;
+          }
+          this.load();
+        }
+        prev() {
+          this.personId--;
+          if (this.personId < 0) {
+            this.personId = reviews.length - 1;
+          }
+          this.load();
+        }
+        rand() {
+          this.personId = Math.floor(Math.random() * reviews.length);
+          this.load();
+        }
+      }
     </script>
   </body>
 </html>
